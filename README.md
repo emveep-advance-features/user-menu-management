@@ -2,7 +2,7 @@
  
  ## Simple steps to use this API
  1. create menu
- 2. create user and select menu
+ 2. create user 
  3. authenticate user and password
  4. copy and paste token to padlock icon
  5. get menu allowed by superadmin only
