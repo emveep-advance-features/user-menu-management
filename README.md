@@ -7,8 +7,9 @@
  4. copy and paste token to padlock icon
  5. get menu allowed by superadmin only
  
- ## Steps to running thi project
+ ## Simple steps to running this project
  1. install all package dependencies in csproj file 
  2. dotnet ef migrations add MyMigrations
  3. dotnet ef database update
  4. dotnet run
+ 5. open link in https://localhost:xxxx/swagger/index.html
