@@ -12,4 +12,4 @@
  2. dotnet ef migrations add MyMigrations
  3. dotnet ef database update
  4. dotnet run
- 5. open link in https://localhost:xxxx/swagger/index.html
+ 5. open link in https://localhost:7217/swagger/index.html
