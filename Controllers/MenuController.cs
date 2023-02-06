@@ -95,7 +95,7 @@ namespace role_management_user.Controllers
         }
 
         [Authorize(Roles = "superadmin")]
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public ActionResult deleteMenuController(int id)
         {
             var check = repository.menuById(id);

@@ -124,39 +124,39 @@ namespace role_management_user.Controllers
             return Ok(model);
         }
 
-        // [Authorize(Roles = "superadmin")]
-        // [HttpPut("{id}")]
-        // public IActionResult update(int id, [FromForm] UserUpdateDto model, [FromQuery] int[] menuIds)
-        // {
-        //     List<Menu> menus = new List<Menu>();
-        //     var user = repository.getById(id);
+        [Authorize(Roles = "superadmin")]
+        [HttpPut("update/{id}")]
+        public IActionResult update(int id, [FromForm] UserUpdateDto model, [FromQuery] int[] menuIds)
+        {
+            List<Menu> menus = new List<Menu>();
+            var user = repository.getById(id);
  
-        //     try
-        //     {
-        //         foreach(int menuId in menuIds)
-        //         {
-        //             var menu = menuRepository.menuById(menuId);
-        //             if(menu == null)
-        //             {
-        //                 baseResponse.code = 404;
-        //                 baseResponse.message = "Data Not Found!";
-        //                 getResponse.Meta = baseResponse;
-        //                 return BadRequest(getResponse);
-        //             }
-        //             menus.Add(menu);
-        //         }
-        //         mapper.Map(model, user);
-        //         repository.update(user, model.password);
-        //         userMenuRepository.updateMultipleUserMenu(user, menus);
-        //         baseResponse.code = 200;
-        //         baseResponse.message = "Update success!";
-        //         return Ok(baseResponse);
-        //     }
-        //     catch (AppException ex)
-        //     {
-        //         return BadRequest(new { message = ex.Message });
-        //     }
-        // }
+            try
+            {
+                foreach(int menuId in menuIds)
+                {
+                    var menu = menuRepository.menuById(menuId);
+                    if(menu == null)
+                    {
+                        baseResponse.code = 404;
+                        baseResponse.message = "Data Not Found!";
+                        getResponse.Meta = baseResponse;
+                        return BadRequest(getResponse);
+                    }
+                    menus.Add(menu);
+                }
+                mapper.Map(model, user);
+                repository.update(user, model.password);
+                userMenuRepository.updateMultipleUserMenu(user, menus);
+                baseResponse.code = 200;
+                baseResponse.message = "Update success!";
+                return Ok(baseResponse);
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
 
         [Authorize(Roles = "superadmin")]
         [HttpDelete("{id}")]
