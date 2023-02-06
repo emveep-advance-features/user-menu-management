@@ -44,3 +44,7 @@ C:\Users\Yahya\Documents\github-repository\role-management-user\bin\Debug\net6.0
 C:\Users\Yahya\Documents\github-repository\role-management-user\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\Yahya\Documents\github-repository\role-management-user\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Yahya\Documents\github-repository\role-management-user\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Yahya\Documents\github-repository\role-management-user\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Yahya\Documents\github-repository\role-management-user\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\Yahya\Documents\github-repository\role-management-user\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Yahya\Documents\github-repository\role-management-user\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

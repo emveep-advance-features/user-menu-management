@@ -11,7 +11,7 @@ namespace role_management_user.Profiles
             CreateMap<Menu, MenuReadDto>();
             // CreateMap<User, UserReadDto>();
             CreateMap<MenuCreateDto, Menu>();
-            // CreateMap<UpdateModel, User>();
+            CreateMap<MenuUpdateDto, Menu>();
         }
     }
 }

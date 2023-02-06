@@ -74,5 +74,42 @@ namespace role_management_user.Controllers
                 return BadRequest(getResponse);
             }
         }
+
+        [Authorize(Roles = "superadmin")]
+        [HttpPut("{id}")]
+        public ActionResult updateMenu(int id, MenuUpdateDto menuUpdateDto)
+        {
+            var modelFromRepo = repository.menuById(id);
+            if (modelFromRepo == null)
+            {
+                baseResponse.code = 404;
+                baseResponse.message = "Data Not Found!";
+                return NotFound(baseResponse);
+            }
+            mapper.Map(menuUpdateDto, modelFromRepo);
+            repository.updateMenu(modelFromRepo);
+            repository.saveChanges();
+            baseResponse.code = 200;
+            baseResponse.message = "Success Updating Data!";
+            return Ok(baseResponse);
+        }
+
+        [Authorize(Roles = "superadmin")]
+        [HttpDelete]
+        public ActionResult deleteMenuController(int id)
+        {
+            var check = repository.menuById(id);
+            if(check == null)
+            {
+                baseResponse.code = 404;
+                baseResponse.message = "Data Not Found!";
+                return NotFound(baseResponse);
+            }
+            repository.deleteMenu(id);
+            repository.saveChanges();
+            baseResponse.code = 200;
+            baseResponse.message = "Delete Menu Success!";
+            return Ok(baseResponse);
+        }
     }
 }

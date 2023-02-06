@@ -8,10 +8,9 @@ namespace role_management_user.Profiles
     {
         public UserProfile()
         {
-            // CreateMap<User, UserModel>();
-            // CreateMap<User, UserReadDto>();
+            CreateMap<User, UserReadDto>();
             CreateMap<RegisterModel, User>();
-            // CreateMap<UpdateModel, User>();
+            CreateMap<UserUpdateDto, User>();
         }
     }
 }

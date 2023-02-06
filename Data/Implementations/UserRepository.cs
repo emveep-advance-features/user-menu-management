@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using role_management_user.Data.Interface;
 using role_management_user.Models;
 
@@ -42,7 +43,15 @@ namespace role_management_user.Data.Implementations
         }
         public void delete(int id)
         {
-            throw new NotImplementedException();
+            var userMenu = context.UserMenus.Where(x => x.user.id == id).ToList();
+            var user = context.Users.Find(id);
+            
+            if(user != null)
+            {
+                context.UserMenus.RemoveRange(userMenu);
+                context.Users.Remove(user);
+                context.SaveChanges();
+            }
         }
 
         public IEnumerable<User> getAllUser()
@@ -98,6 +107,20 @@ namespace role_management_user.Data.Implementations
                 }
             }
             return true;
+        }
+
+        public User userMenuByUserId(int id)
+        {
+             List<Menu> menus = new List<Menu>();
+            var user = context.Users.FirstOrDefault(x => x.id == id);
+            var userMenus = context.UserMenus.Include(x => x.menu).Where(x => x.user.id == id).ToList();
+            foreach(var userMenu in userMenus)
+            {
+                userMenu.menu.subMenus = context.SubMenus.Where(x => x.menu.id == userMenu.menu.id).ToList();
+                menus.Add(userMenu.menu);
+            }
+            user.menus = menus;
+            return user;
         }
     }
 }

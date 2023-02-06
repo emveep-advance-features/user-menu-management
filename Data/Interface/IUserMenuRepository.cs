@@ -8,6 +8,8 @@ namespace role_management_user.Data.Interface
         void createUserMenus(int[] menuIds, User user);
         //update user and multiple menu
         void updateUserMenus(User user, List<Menu> menus);
+        void updateMultipleUserMenu(User user, List<Menu> menus);
+
         bool saveChanges();
 
     }

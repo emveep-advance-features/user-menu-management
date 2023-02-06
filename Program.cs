@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using role_management_user.Data;
 using role_management_user.Data.Implementations;
 using role_management_user.Data.Interface;
@@ -11,9 +13,31 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DbContextClass>();
-
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy(name: "AllowOrigin",
+        builder =>
+        {
+            builder
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        }
+    );
+});
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+});
+builder.Services.AddControllers().AddNewtonsoftJson(s =>
+{
+    s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+    s.SerializerSettings.Converters.Add(new StringEnumConverter());
+});
 
 var configuration = builder.Configuration;
 var appSettingSection = configuration.GetSection("AppSettings");
@@ -54,7 +78,7 @@ builder.Services.AddAuthentication(x =>
       };
   });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+// builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSwaggerGen(options =>
 {
@@ -91,18 +115,22 @@ builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
+app.UseRouting();
+app.UseStaticFiles();
+app.UseCors("AllowOrigin");
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+        app.UseSwaggerUI(options =>
+      {
+          options.SwaggerEndpoint("/swagger/v1/swagger.json", "API DOC");
+      });
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

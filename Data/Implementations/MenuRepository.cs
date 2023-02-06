@@ -41,7 +41,14 @@ namespace role_management_user.Data.Implementations
 
         public void deleteMenu(int id)
         {
-            throw new NotImplementedException();
+            var subMenus = context.SubMenus.Where(x => x.menu.id == id).ToList();
+            var menu = context.Menus.Find(id);
+            if(menu == null)
+            {
+                context.SubMenus.RemoveRange(subMenus);
+                context.Menus.Remove(menu);
+                context.SaveChanges();
+            }
         }
 
         public Menu menuById(int id)
@@ -64,9 +71,6 @@ namespace role_management_user.Data.Implementations
             return (context.SaveChanges() >= 0);
         }
 
-        public void updateMenu(Menu menu)
-        {
-            throw new NotImplementedException();
-        }
+        public void updateMenu(Menu menu){}
     }
 }
