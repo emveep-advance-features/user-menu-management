@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "zt9mtHCTb+gdbSj8nvn6q3gNsY4gmWrTEMZCqjVilJE=",
+  "Source": "role-management-user",
+  "BasePath": "_content/role-management-user",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
